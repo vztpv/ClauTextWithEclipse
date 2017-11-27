@@ -1,0 +1,51 @@
+grammar org.xtext.wiz.Clautext with org.eclipse.xtext.common.Terminals
+
+generate clautext "http://www.xtext.org/wiz/Clautext"
+
+
+Lang :
+	lang += Clautext*
+;
+
+Clautext :
+	Event |
+	Data  |
+	Main 
+;
+
+Data :
+	val=WIZ_STRING |
+	var=WIZ_STRING '=' val=WIZ_STRING |
+	var=WIZ_STRING '=' '{' data = Data* '}'
+;
+
+Main :
+	'Main' '=' '{'
+		'$call' '=' '{' 'id' '=' id=WIZ_STRING '}' 
+	'}'	
+;
+
+Event  :
+	'Event' '=' '{'
+		event = EventData+
+	'}'
+;
+EventData:
+	'id' '=' val=WIZ_STRING |
+	'$print' '=' '{'
+		utName = WIZ_STRING '=' '{'
+			print_data = WIZ_STRING+
+		'}'
+	'}'
+;
+
+
+terminal WIZ_STRING :  
+	'"' ( '\\' . /* 'b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\' */ | !('\\'|'"') )* '"' |
+	"'" ( '\\' . /* 'b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\' */ | !('\\'|"'") )* "'" |
+	(!(' '|'\t'|'\r'|'\n'|'#'|'"'|"'"))+
+;
+
+@Override
+terminal SL_COMMENT 	: '#' !('\n'|'\r')* ('\r'? '\n')?;
+
