@@ -1,0 +1,23 @@
+
+# test
+dd = 3
+ee = 'aa a'
+
+Main = {
+	$call = { id = 345  }
+}
+
+Event = {
+	id = abc
+	
+	$print = { 
+		data = { /./dd }
+	}
+	$call = { id = def x = 1 y = 2 z = { $EQ = { /./dd 3 } } }
+}
+
+Event = {
+	id = def
+	
+	$parameter = { x y z }
+}
