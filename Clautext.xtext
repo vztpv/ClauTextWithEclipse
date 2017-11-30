@@ -91,8 +91,162 @@ Func:
 			'}'
 		'}'
 	)? |
-	'$_getch' '=' '{'
-	'}' 
+	'$_getch' '=' '{' '}' |
+	'$replace_datatype1' '=' '{'
+		(WIZ_STRING '=' '{'
+			Expr
+		'}')+
+	'}' |
+	'$replace_datatype1_2' '=' '{'
+		(WIZ_STRING '=' '{'
+			Expr
+		'}')+
+	'}' |
+	'$replace_datatype2' '=' '{'
+		(WIZ_STRING '=' '{' 
+			Expr
+		'}')+
+	'}' |
+	'$replace_datetype' '=' '{'
+		WIZ_STRING '=' '{'
+			WIZ_STRING
+		'}'
+		(WIZ_STRING '=' '{'
+			Expr
+		'}')+
+	'}' |
+	'$replace_datetype2' '=' '{'
+		WIZ_STRING '=' '{'
+			WIZ_STRING
+		'}'
+		(WIZ_STRING '=' '{'
+			Expr
+		'}')+
+	'}' |
+	'$remove_usertype_total' '=' '{'
+		(WIZ_STRING '=' '{'
+			Expr
+		'}')+
+	'}' |
+	'$replace_item' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			WIZ_STRING
+		'}'
+		(WIZ_STRING '=' '{'
+			Expr
+		'}')+
+	'}' |
+	'$edit_mode' '=' '{'
+	'}' |
+	'$save' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+	'}' |
+	'$save_data_only' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+	'}' |
+	'$save_data_only2' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+	'}' |
+	'$register_module' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+	'}' |
+	'$call_registered_module' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		(WIZ_STRING '=' '{'
+			Expr
+		'}')?
+	'}' |
+	'$module' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		(WIZ_STRING '=' '{'
+			Expr
+		'}')?
+	'}' |
+	'$register_object' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+	'}' |
+	'$copy_object' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+	'}' |
+	'$register_object_from_string' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+	'}' |
+	'$call_registered_object' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+	'}' |
+	'$call_registered_object2' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+	'}' |
+	'$object' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+	'}' |
+	'$object_from_string' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+	'}' |
+	'$option' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+	'}'
 ;
 
 CallData :
@@ -140,7 +294,7 @@ STRINGS:
 	WIZ_STRING |
 	'TRUE' |
 	'FALSE' |
-	'$EQ' | // |  todo - other function name, id, ...
+	'$EQ' |
 	'$COMP<' |
 	'$COMP>' |
 	'$COMP<EQ' |
@@ -154,7 +308,29 @@ STRINGS:
 	'$do' |
 	'$if' |
 	'$else' |
-	'$_getch'
+	'$_getch' |
+	'$replace_datatype1' |
+	'$replace_datatype1_2' |
+	'$replace_datatype2' |
+	'$replace_datetype' |
+	'$replace_datetype2' |
+	'$remove_usertype_total' |
+	'$replace_item' |
+	'$edit_mode' |
+	'$save' |
+	'$save_data_only' |
+	'$save_data_only2' |
+	'$register_module' |
+	'$call_registered_module' |
+	'$module' |
+	'$register_object' |
+	'$copy_object' |
+	'$register_object_from_string' |
+	'$call_registered_object' |
+	'$call_registered_object2' |
+	'$object' |
+	'$object_from_string' |
+	'$option'
 ;
 
 terminal DIR_STRING:
