@@ -13,10 +13,16 @@ Clautext :
 	Main 
 ;
 
-Data :
-	val=WIZ_STRING |
-	var=WIZ_STRING '=' val=WIZ_STRING |
-	var=WIZ_STRING '=' '{' data = Data* '}'
+Data : // WIZ_STRING -> STRINGS??
+	val=STRINGS |
+	var=STRINGS '=' val=STRINGS |
+	var=STRINGS '=' '{' data = Data2* '}'
+;
+
+Data2 : // WIZ_STRING -> STRINGS??
+	val=STRINGS_ALL |
+	var=STRINGS_ALL '=' val=STRINGS_ALL |
+	var=STRINGS_ALL '=' '{' data = Data2* '}'
 ;
 
 Main :
@@ -30,18 +36,62 @@ Event  :
 		event = EventData+
 	'}'
 ;
-EventData:
+EventData :
 	'id' '=' val=WIZ_STRING |
-	'$parameter' '=' '{'
+	Func |
+	'$local' '=' '{'
 		WIZ_STRING+
 	'}' |
+	'$parameter' '=' '{'
+		WIZ_STRING+ 
+	'}'
+;
+Func:
 	'$call' '=' '{' 
 		CallData+
 	'}' |
-	'$print' '=' '{'
-		utName = WIZ_STRING '=' '{'
-			print_data = STRINGS+
+	'$print' '=' '{' // $print -> $print, $print_list?
+		 WIZ_STRING '=' '{'
+			Expr // check STRINGS?
 		'}'
+		( WIZ_STRING '=' '{'
+			Expr
+		'}'
+		 WIZ_STRING '=' '{'
+			Expr
+		'}' )?
+	'}' |
+	'$while' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Func*
+		'}'
+	'}' |
+	'$do' '=' '{'
+		WIZ_STRING '=' '{'
+			STRINGS
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+	'}' |
+	'$if' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Func*
+		'}'
+	'}'
+	(	'$else' '=' '{' 
+			WIZ_STRING '=' '{'
+				Func*
+			'}'
+		'}'
+	)? |
+	'$_getch' '=' '{'
 	'}' 
 ;
 
@@ -60,19 +110,51 @@ Expr:
 	'$EQ' '=' '{'
 		Expr Expr
 	'}' |
-	'$concat_all' '=' '{'
-		Expr+
+	'$COMP>' '=' '{'
+		Expr Expr
 	'}' |
-	'TRUE' |
-	'FALSE' |
+	'$COMP<' '=' '{'
+		Expr Expr
+	'}' |
+	'$COMP>EQ' '=' '{'
+		Expr Expr
+	'}' |
+	'$COMP<EQ' '=' '{'
+		Expr Expr
+	'}' |
+	'$concat_all' '=' '{'
+		Expr*
+	'}' |
 	STRINGS
 ;
 
+STRINGS_ALL :
+	STRINGS |
+	'Main' |
+	'Event'
+;
 STRINGS:
 	DIR_STRING |
 	LOCAL_STRING|
 	PARAMTER_STRING |
-	WIZ_STRING
+	WIZ_STRING |
+	'TRUE' |
+	'FALSE' |
+	'$EQ' | // |  todo - other function name, id, ...
+	'$COMP<' |
+	'$COMP>' |
+	'$COMP<EQ' |
+	'$COMP>EQ' |
+	'$concat_all' |
+	'id' |
+	'$call' |
+	'$parameter' |
+	'$print' |
+	'$while' |
+	'$do' |
+	'$if' |
+	'$else' |
+	'$_getch'
 ;
 
 terminal DIR_STRING:
