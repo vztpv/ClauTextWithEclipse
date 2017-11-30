@@ -1,23 +1,64 @@
 
+
 # test
 dd = 3
 ee = 'aa a'
+chk78 = TRUE
+Main = 3
+
+
+
+x = {
+	Event = {
+		x = 1
+		y z
+	}
+	Main = 3
+}
 
 Main = {
-	$call = { id = abc  } // id = 345
+	$call = { id = abc  }
 }
 
 Event = {
 	id = abc
 	
+	$local = {
+		a b c 
+	}
+	
 	$print = { 
 		data = { /./dd }
 	}
+	$print = {
+		enter = { \n }
+	}
 	$call = { id = def x = 1 y = 2 z = { $EQ = { /./dd 3 } } }
+	
+	#$_getch = { }
 }
 
 Event = {
 	id = def
 	
 	$parameter = { x y z }
+	
+	$if = { 
+		condition = { $parameter.z }
+		then = {
+			$print = { # $println ??
+				data = { $parameter.x }
+			}
+			$print = {
+				enterkey = { \n }
+			}
+		}
+	}
+	$else = {
+		then = {
+			
+		}
+	}
 }
+
+
