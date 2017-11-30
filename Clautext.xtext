@@ -332,6 +332,7 @@ Func:
 		)?
 	'}' |
 	'$assign' '=' '{'
+		(DIR_STRING | LOCAL_STRING) // check!
 		WIZ_STRING '=' '{'
 			Expr
 		'}'
