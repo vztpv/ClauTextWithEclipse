@@ -13,10 +13,11 @@ Clautext :
 	Main 
 ;
 
+// check this part! - changeable?
 Data : // WIZ_STRING -> STRINGS??
-	val=STRINGS |
-	var=STRINGS '=' val=STRINGS |
-	var=STRINGS '=' '{' data = Data2* '}'
+	val=STRINGS_ALL |
+	var=STRINGS_ALL '=' val=STRINGS |
+	var=STRINGS_ALL2 '=' '{' data = Data2* '}'
 ;
 
 Data2 : // WIZ_STRING -> STRINGS??
@@ -71,7 +72,7 @@ Func:
 	'}' |
 	'$do' '=' '{'
 		WIZ_STRING '=' '{'
-			STRINGS
+			STRINGS_ALL
 		'}'
 		WIZ_STRING '=' '{'
 			Expr
@@ -92,41 +93,91 @@ Func:
 		'}'
 	)? |
 	'$_getch' '=' '{' '}' |
+	// COND?
+	//		how implement?
 	'$replace_datatype1' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			COND
+		'}'
 		(WIZ_STRING '=' '{'
 			Expr
-		'}')+
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}')?
 	'}' |
 	'$replace_datatype1_2' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			COND
+		'}'
 		(WIZ_STRING '=' '{'
 			Expr
-		'}')+
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}')?
 	'}' |
 	'$replace_datatype2' '=' '{'
-		(WIZ_STRING '=' '{' 
+		WIZ_STRING '=' '{'
 			Expr
-		'}')+
+		'}'
+		WIZ_STRING '=' '{'
+			COND
+		'}'
+		(WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}')?
 	'}' |
 	'$replace_datetype' '=' '{'
 		WIZ_STRING '=' '{'
 			WIZ_STRING
 		'}'
 		(WIZ_STRING '=' '{'
-			Expr
-		'}')+
+			COND
+		'}'
+		WIZ_STRING '=' '{'
+			Expr // start_dir
+		'}'
+		WIZ_STRING '=' '{'
+			Expr // recursive
+		'}')?
 	'}' |
 	'$replace_datetype2' '=' '{'
 		WIZ_STRING '=' '{'
 			WIZ_STRING
 		'}'
 		(WIZ_STRING '=' '{'
-			Expr
-		'}')+
+			COND
+		'}'
+		WIZ_STRING '=' '{'
+			Expr // start_dir
+		'}'
+		WIZ_STRING '=' '{'
+			Expr // recursive
+		'}')?
 	'}' |
 	'$remove_usertype_total' '=' '{'
-		(WIZ_STRING '=' '{'
+		WIZ_STRING '=' '{'
 			Expr
-		'}')+
+		'}'
+		(WIZ_STRING '=' '{'
+			COND
+		'}'
+		WIZ_STRING '=' '{'
+			Expr // start_dir
+		'}'
+		WIZ_STRING '=' '{'
+			Expr // recursive
+		'}')?
 	'}' |
 	'$replace_item' '=' '{'
 		WIZ_STRING '=' '{'
@@ -136,8 +187,14 @@ Func:
 			WIZ_STRING
 		'}'
 		(WIZ_STRING '=' '{'
-			Expr
-		'}')+
+			COND
+		'}'
+		WIZ_STRING '=' '{'
+			Expr // start_dir
+		'}'
+		WIZ_STRING '=' '{'
+			Expr // recursive
+		'}')?
 	'}' |
 	'$edit_mode' '=' '{'
 	'}' |
@@ -246,9 +303,110 @@ Func:
 		WIZ_STRING '=' '{'
 			Expr
 		'}'
+	'}' |
+	'$pop_back' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		(
+			COND
+		)?
+	'}' |
+	'$push_front' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		(
+			COND
+		)?
+	'}' |
+	'$pop_front' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		(
+			COND
+		)?
+	'}' |
+	'$assign' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+	'}' |
+	'$assign2' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+	'}' |
+	'$assign_local' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+	'}' |
+	'$assign_global' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+	'}' |
+	'$push_back' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		(
+			COND
+		)?
+	'}' |
+	'$insert' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		(
+			COND
+		)?
+	'}' |
+	'$insert2' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		(
+			COND
+		)?
+	'}' |
+	'$insert_noname_usertype' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		WIZ_STRING '=' '{'
+			Expr
+		'}'
+		(
+			COND
+		)?
 	'}'
+	
 ;
-
+ 
 CallData :
 	'id' '=' WIZ_STRING |
 	'id' '=' '{' 
@@ -279,14 +437,73 @@ Expr:
 	'$concat_all' '=' '{'
 		Expr*
 	'}' |
-	STRINGS
+	DIR_STRING |
+	LOCAL_STRING|
+	PARAMTER_STRING |
+	WIZ_STRING |
+	'TRUE' |
+	'FALSE'
 ;
 
-STRINGS_ALL :
-	STRINGS |
-	'Main' |
-	'Event'
+COND :
+	// condition
+	'EQ' '=' '{'
+		COND COND
+	'}' |
+	'COMP>' '=' '{'
+		COND COND
+	'}' |
+	'COMP<' '=' '{'
+		COND COND
+	'}' |
+	'COMP>EQ' '=' '{'
+		COND COND
+	'}' |
+	'COMP<EQ' '=' '{'
+		COND COND
+	'}' |
+	// expr copy?
+	'$EQ' '=' '{'
+		COND COND
+	'}' |
+	'$COMP>' '=' '{'
+		COND COND
+	'}' |
+	'$COMP<' '=' '{'
+		COND COND
+	'}' |
+	'$COMP>EQ' '=' '{'
+		COND COND
+	'}' |
+	'$COMP<EQ' '=' '{'
+		COND COND
+	'}' |
+	'$concat_all' '=' '{'
+		COND*
+	'}' |
+	DIR_STRING |
+	LOCAL_STRING |
+	PARAMTER_STRING |
+	WIZ_STRING |
+	'TRUE' |
+	'FALSE'
 ;
+
+STRINGS_ALL:
+	STRINGS_ALL2 |
+	'Main' |
+	'Event' 
+;
+STRINGS_ALL2 :
+	STRINGS |
+	// STRINGS2? COND?
+	'EQ' |
+	'COMP<' |
+	'COMP>' |
+	'COMP<EQ' |
+	'COMP>EQ' 
+;
+
 STRINGS:
 	DIR_STRING |
 	LOCAL_STRING|
@@ -330,7 +547,18 @@ STRINGS:
 	'$call_registered_object2' |
 	'$object' |
 	'$object_from_string' |
-	'$option'
+	'$option' |
+	'$pop_back' |
+	'$push_front' |
+	'$pop_front' |
+	'$assign' |
+	'$assign2' |
+	'$assign_local' |
+	'$assign_global' |
+	'$push_back' |
+	'$insert' |
+	'$insert2' |
+	'$insert_noname_usertype' 
 ;
 
 terminal DIR_STRING:
