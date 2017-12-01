@@ -404,8 +404,133 @@ Func:
 		(
 			COND
 		)?
+	'}' |
+	'$insert_by_idx' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr //dir
+		'}'
+		WIZ_STRING '=' '{'
+			Expr //idx
+		'}'
+		WIZ_STRING '=' '{'
+			Expr //val
+		'}'
+		(WIZ_STRING '=' '{'
+			COND
+		'}')?
+	'}' |
+	'$make' '=' '{' // Expr, WIZ_STRING '=' '{' Expr '}'
+		Expr // dir
+		
+		(WIZ_STRING '=' '{'
+			COND
+		'}')?
+	'}' |
+	'$findIndex' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr // dir
+		'}'
+		WIZ_STRING '=' '{'
+			Expr // value
+		'}'
+	'}' |
+	'$remove' '=' '{'
+		Expr // dir
+		
+		(WIZ_STRING '=' '{'
+			COND
+		'}')?
+	'}' |
+	'$remove2' '=' '{'
+		Expr // dir
+		
+		(WIZ_STRING '=' '{'
+			COND
+		'}')?
+	'}' |
+	'$$remove3' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr // dir
+		'}'
+		WIZ_STRING '=' '{'
+			Expr // value
+		'}'
+		(WIZ_STRING '=' '{'
+			COND
+		'}')?
+	'}' |
+	'$setElement' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr // dir
+		'}'
+		WIZ_STRING '=' '{'
+			Expr // idx
+		'}'
+		WIZ_STRING '=' '{'
+			Expr // value
+		'}'
+	'}' |
+	'$swap' '=' '{'
+		Expr // dir
+		WIZ_STRING '=' '{'
+			Expr // value1
+		'}'
+		WIZ_STRING '=' '{'
+			Expr // value2
+		'}'
+	'}' |
+	'$print2' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr // dir
+		'}'
+	'}' |
+	'$load' '=' '{'
+		Expr+
+	'}' |
+	'$load_only_data' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr // fileName
+		'}'
+		WIZ_STRING '=' '{'
+			Expr // dirName
+		'}'
+	'}' |
+	'$load_json' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr // fileName
+		'}'
+		WIZ_STRING '=' '{'
+			Expr // dirName
+		'}'
+	'}' |
+	'$clear_screen' '=' '{' '}' |
+	'$input' '=' '{' '}' |
+	'$return' '=' '{'
+		Expr+
+	'}' |
+	'$sort' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr // 
+		'}'
+	'}' |
+	'$sort2' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr // 
+		'}'
+	'}' |
+	'$sort2_dsc' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr // 
+		'}'
+		WIZ_STRING '=' '{'
+			Expr // colName 
+		'}'
+	'}' |
+	'$stable_sort' '=' '{'
+		WIZ_STRING '=' '{'
+			Expr // 
+		'}'
 	'}'
-	
 ;
  
 CallData :
@@ -559,7 +684,26 @@ STRINGS:
 	'$push_back' |
 	'$insert' |
 	'$insert2' |
-	'$insert_noname_usertype' 
+	'$insert_noname_usertype' |
+	'$insert_by_idx' |
+	'$make' |
+	'$findIndex' |
+	'$remove' |
+	'$remove2' |
+	'$remove3' |
+	'$setElement' |
+	'$swap' |
+	'$print2' |
+	'$load' |
+	'$load_only_data' |
+	'$load_json' |
+	'$clear_screen' |
+	'$input' |
+	'$return' |
+	'$sort' |
+	'$sort2' |
+	'$sort2_dsc' |
+	'$stable_sort'
 ;
 
 terminal DIR_STRING:
