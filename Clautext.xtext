@@ -420,7 +420,7 @@ Func:
 		'}')?
 	'}' |
 	'$make' '=' '{' // Expr, WIZ_STRING '=' '{' Expr '}'
-		Expr // dir
+		WIZ_STRING  // dir
 		
 		(WIZ_STRING '=' '{'
 			COND
@@ -435,14 +435,14 @@ Func:
 		'}'
 	'}' |
 	'$remove' '=' '{'
-		Expr // dir
+		WIZ_STRING // dir
 		
 		(WIZ_STRING '=' '{'
 			COND
 		'}')?
 	'}' |
 	'$remove2' '=' '{'
-		Expr // dir
+		WIZ_STRING // dir
 		
 		(WIZ_STRING '=' '{'
 			COND
@@ -471,7 +471,8 @@ Func:
 		'}'
 	'}' |
 	'$swap' '=' '{'
-		Expr // dir
+		WIZ_STRING // dir
+		
 		WIZ_STRING '=' '{'
 			Expr // value1
 		'}'
@@ -485,7 +486,7 @@ Func:
 		'}'
 	'}' |
 	'$load' '=' '{'
-		Expr+
+		WIZ_STRING+
 	'}' |
 	'$load_only_data' '=' '{'
 		WIZ_STRING '=' '{'
