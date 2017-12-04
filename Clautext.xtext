@@ -674,9 +674,101 @@ Expr:
 	'$is_quoted_str2' '=' '{'
 		Expr
 	'}' |
-	'$toQuotedStr' '=' '{'
+	'$to_quoted_str' '=' '{'
 		Expr
 	'}' |
+	'$to_quoted_str2' '=' '{'
+		Expr
+	'}' |
+	'$add_small_quoted' '=' '{'
+		Expr
+	'}' |
+	'$remove_quoted' '=' '{'
+		Expr
+	'}' |
+	'$remove_quoted2' '=' '{'
+		Expr
+	'}' |
+	'$remove_small_quoted' '=' '{'
+		Expr
+	'}' |
+	'$get_object_str' '=' '{'
+		Expr Expr
+	'}' |
+	'$add_paren' '=' '{'
+		Expr 
+	'}' |
+	'$get_item_name' '=' '{'
+		Expr+
+	'}' |
+	'$get_item_value' '=' '{'
+		Expr+
+	'}' |
+	'$get_item_size' '=' '{'
+		Expr+
+	'}' |
+	'$is_empty_string' '=' '{'
+		Expr
+	'}' |
+	'$event_result' '=' '{'
+		Expr+
+	'}' |
+	'$get_item_value2' '=' '{'
+		Expr
+	'}' |
+	'$space' '=' '{'
+		
+	'}' |
+	'$empty' '=' '{'
+		
+	'}' |
+	'$move_up' '=' '{'
+		Expr+
+	'}' |
+	'$to_float_from_integer' '=' '{'
+		Expr
+	'}' |
+	'$to_integer_from_float' '=' '{'
+		Expr
+	'}' |
+	'$floor' '=' '{'
+		Expr
+	'}' |
+	'$ceiling' '=' '{'
+		Expr
+	'}' |
+	'$round' '=' '{'
+		Expr
+	'}' |
+	'$contains' '=' '{'
+		Expr Expr
+	'}' |
+	'$starts_with' '=' '{'
+		Expr Expr
+	'}' |
+	'$ends_with' '=' '{'
+		Expr Expr
+	'}' |
+	'$string_length' '=' '{'
+		Expr
+	'}' |
+	'$substring' '=' '{'
+		Expr Expr Expr
+	'}' |
+	'$is_integer_type' '=' '{'
+		Expr
+	'}' |
+	'$is_float_type' '=' '{'
+		Expr
+	'}' |
+	'$is_pure_string_type' '=' '{'
+		Expr
+	'}' |
+	'$get_type' '=' '{'
+		Expr
+	'}' |
+	
+	
 	
 	//	
 	WIZ_STRING '=' '{'
@@ -718,6 +810,24 @@ COND :
 	'$EQ' '=' '{'
 		COND COND
 	'}' |
+	'$NOTEQ' '=' '{'
+		COND COND
+	'}' |
+	'$AND' '=' '{'
+		COND COND
+	'}' |
+	'$AND_ALL' '=' '{'
+		COND+
+	'}' |
+	'$OR' '=' '{' 
+		COND COND
+	'}' |
+	'$OR_ALL' '=' '{'
+		COND+
+	'}' |
+	'$NOT' '=' '{'
+		COND
+	'}' |
 	'$COMP>' '=' '{'
 		COND COND
 	'}' |
@@ -730,8 +840,167 @@ COND :
 	'$COMP<EQ' '=' '{'
 		COND COND
 	'}' |
+	'$add' '=' '{'
+		COND COND
+	'}' |
+	'$multiple' '=' '{'
+		COND COND
+	'}' |
+	'$divide' '=' '{'
+		COND COND
+	'}' |
+	'$modular' '=' '{'
+		COND COND
+	'}' |
+	'$rand' '=' '{'
+		COND COND  // start, last?
+	'}' |
+	'$concat' '=' '{'
+		COND COND
+	'}' |
+	'$concat2' '=' '{'
+		COND COND
+	'}' |
 	'$concat_all' '=' '{'
-		COND*
+		COND+
+	'}' |
+	'$concat_all2' '=' '{'
+		COND+
+	'}' |
+	'$concat3' '=' '{' 
+		COND+
+	'}' |
+	'$return_value' '=' '{'
+	
+	'}' |
+	'$back' '=' '{'
+		COND
+	'}' |
+	'$pop_back' '=' '{'
+		COND
+	'}' |
+	'$front' '=' '{'
+		COND
+	'}' |
+	'$pop_front' '=' '{'
+		COND
+	'}' |
+	'$get' '=' '{'
+		COND
+	'}' |
+	'$size' '=' '{'
+		COND
+	'}' |
+	'$size2' '=' '{'
+		COND
+	'}' |
+	'$element' '=' '{'
+		COND COND
+	'}' |
+	'$regex' '=' '{'
+		COND COND
+	'}' |
+	'$eval' '=' '{'
+		COND
+	'}' |
+	'$is_quoted_str' '=' '{'
+		COND
+	'}' |
+	'$is_quoted_str2' '=' '{'
+		COND
+	'}' |
+	'$to_quoted_str' '=' '{'
+		COND
+	'}' |
+	'$to_quoted_str2' '=' '{'
+		COND
+	'}' |
+	'$add_small_quoted' '=' '{'
+		COND
+	'}' |
+	'$remove_quoted' '=' '{'
+		COND
+	'}' |
+	'$remove_quoted2' '=' '{'
+		COND
+	'}' |
+	'$remove_small_quoted' '=' '{'
+		COND
+	'}' |
+	'$get_object_str' '=' '{'
+		COND COND
+	'}' |
+	'$add_paren' '=' '{'
+		COND 
+	'}' |
+	'$get_item_name' '=' '{'
+		COND+
+	'}' |
+	'$get_item_value' '=' '{'
+		COND+
+	'}' |
+	'$get_item_size' '=' '{'
+		COND+
+	'}' |
+	'$is_empty_string' '=' '{'
+		COND
+	'}' |
+	'$event_result' '=' '{'
+		COND+
+	'}' |
+	'$get_item_value2' '=' '{'
+		COND
+	'}' |
+	'$space' '=' '{'
+		
+	'}' |
+	'$empty' '=' '{'
+		
+	'}' |
+	'$move_up' '=' '{'
+		COND+
+	'}' |
+	'$to_float_from_integer' '=' '{'
+		COND
+	'}' |
+	'$to_integer_from_float' '=' '{'
+		COND
+	'}' |
+	'$floor' '=' '{'
+		COND
+	'}' |
+	'$ceiling' '=' '{'
+		COND
+	'}' |
+	'$round' '=' '{'
+		COND
+	'}' |
+	'$contains' '=' '{'
+		COND COND
+	'}' |
+	'$starts_with' '=' '{'
+		COND COND
+	'}' |
+	'$ends_with' '=' '{'
+		COND COND
+	'}' |
+	'$string_length' '=' '{'
+		COND
+	'}' |
+	'$substring' '=' '{'
+		COND COND COND
+	'}' |
+	'$is_integer_type' '=' '{'
+		COND
+	'}' |
+	'$is_float_type' '=' '{'
+		COND
+	'}' |
+	'$is_pure_string_type' '=' '{'
+		COND
+	'}' |
+	'$get_type' '=' '{'
+		COND
 	'}' |
 	DIR_STRING |
 	LOCAL_STRING |
@@ -763,6 +1032,7 @@ STRINGS:
 	WIZ_STRING |
 	'TRUE' |
 	'FALSE' |
+	// FUNC
 	'$EQ' |
 	'$COMP<' |
 	'$COMP>' |
@@ -830,6 +1100,8 @@ STRINGS:
 	'$sort2' |
 	'$sort2_dsc' |
 	'$stable_sort'
+	// Expr?
+	// COND?
 ;
 
 terminal DIR_STRING:
