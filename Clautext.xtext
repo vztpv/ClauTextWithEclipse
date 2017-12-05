@@ -16,7 +16,7 @@ Clautext :
 // check this part! - changeable?
 Data : // WIZ_STRING -> STRINGS??
 	val=STRINGS_ALL |
-	var=STRINGS_ALL '=' val=STRINGS |
+	var=STRINGS_ALL '=' val=STRINGS_ALL |
 	var=STRINGS_ALL2 '=' '{' data = Data2* '}' |
 	'{' data = Data2* '}'
 ;
@@ -792,20 +792,51 @@ Expr:
 COND :
 	// condition
 	'EQ' '=' '{'
-		COND COND
+		COND COND COND COND COND
+	'}' |
+	'NOTEQ' '=' '{'
+		COND COND COND COND COND
 	'}' |
 	'COMP>' '=' '{'
-		COND COND
+		COND COND COND COND COND
 	'}' |
 	'COMP<' '=' '{'
-		COND COND
+		COND COND COND COND COND
 	'}' |
 	'COMP>EQ' '=' '{'
-		COND COND
+		COND COND COND COND COND
 	'}' |
 	'COMP<EQ' '=' '{'
+		COND COND COND COND COND
+	'}' |
+	'REGEX' '=' '{'
+		COND COND COND COND COND
+	'}' |
+	'EXISTITEMBYVALUE' '=' '{'
 		COND COND
 	'}' |
+	'AND' '=' '{'
+		COND COND
+	'}' |
+	'OR' '=' '{'
+		COND COND
+	'}' |
+	'NOT' '=' '{'
+		COND
+	'}' |
+	'EXISTITEM' '=' '{'
+		COND COND
+	'}' |
+	'EXISTUSERTYPE' '=' '{'
+		COND COND
+	'}' |
+	'NOTEXISTITEM' '=' '{'
+		COND COND
+	'}' |
+	'NOTEXISTUSERTYPE' '=' '{'
+		COND COND
+	'}' |
+	
 	// expr copy?
 	'$EQ' '=' '{'
 		COND COND
@@ -1015,33 +1046,19 @@ STRINGS_ALL:
 	'Main' |
 	'Event' 
 ;
-STRINGS_ALL2 :
-	STRINGS |
-	// STRINGS2? COND?
-	'EQ' |
-	'COMP<' |
-	'COMP>' |
-	'COMP<EQ' |
-	'COMP>EQ' 
-;
 
-STRINGS:
+STRINGS_ALL2:
 	DIR_STRING |
 	LOCAL_STRING|
 	PARAMTER_STRING |
 	WIZ_STRING |
 	'TRUE' |
 	'FALSE' |
-	// FUNC
-	'$EQ' |
-	'$COMP<' |
-	'$COMP>' |
-	'$COMP<EQ' |
-	'$COMP>EQ' |
-	'$concat_all' |
 	'id' |
-	'$call' |
 	'$parameter' |
+	'$local' |
+	// FUNC
+	'$call' |
 	'$print' |
 	'$while' |
 	'$do' |
@@ -1099,9 +1116,90 @@ STRINGS:
 	'$sort' |
 	'$sort2' |
 	'$sort2_dsc' |
-	'$stable_sort'
+	'$stable_sort' |
 	// Expr?
+	'$EQ' | 
+	'$NOTEQ' | 
+	'$AND' | 
+	'$AND_ALL' | 
+	'$OR' | 
+	'$OR_ALL' | 
+	'$NOT' | 
+	'$COMP>' | 
+	'$COMP<' | 
+	'$COMP>EQ' | 
+	'$COMP<EQ' | 
+	'$add' | 
+	'$multiple' | 
+	'$divide' | 
+	'$modular' | 
+	'$rand' | 
+	'$concat' | 
+	'$concat2' | 
+	'$concat_all' | 
+	'$concat_all2' | 
+	'$concat3' | 
+	'$return_value' | 
+	'$back' | 
+	//'$pop_back' | 
+	'$front' | 
+	//'$pop_front' | 
+	'$get' | 
+	'$size' | 
+	'$size2' | 
+	'$element' | 
+	'$regex' | 
+	'$eval' | 
+	'$is_quoted_str' | 
+	'$is_quoted_str2' | 
+	'$to_quoted_str' | 
+	'$to_quoted_str2' | 
+	'$add_small_quoted' | 
+	'$remove_quoted' | 
+	'$remove_quoted2' | 
+	'$remove_small_quoted' | 
+	'$get_object_str' | 
+	'$add_paren' | 
+	'$get_item_name' | 
+	'$get_item_value' | 
+	'$get_item_size' | 
+	'$is_empty_string' | 
+	'$event_result' | 
+	'$get_item_value2' | 
+	'$space' | 
+	'$empty' | 
+	'$move_up' | 
+	'$to_float_from_integer' | 
+	'$to_integer_from_float' | 
+	'$floor' | 
+	'$ceiling' | 
+	'$round' | 
+	'$contains' | 
+	'$starts_with' | 
+	'$ends_with' | 
+	'$string_length' | 
+	'$substring' | 
+	'$is_integer_type' | 
+	'$is_float_type' | 
+	'$is_pure_string_type' | 
+	'$get_type' |
+		
 	// COND?
+	'EQ' | 
+	'NOTEQ' | 
+	'COMP>' | 
+	'COMP<' | 
+	'COMP>EQ' | 
+	'COMP<EQ' | 
+	'REGEX' | 
+	'EXISTITEMBYVALUE' | 
+	'AND' | 
+	'OR' | 
+	'NOT' | 
+	'EXISTITEM' | 
+	'EXISTUSERTYPE' | 
+	'NOTEXISTITEM' | 
+	'NOTEXISTUSERTYPE'
 ;
 
 terminal DIR_STRING:
